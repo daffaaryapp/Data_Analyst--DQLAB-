@@ -2,7 +2,7 @@ import pandas as pd
 
 # 1. Baca dataset
 print("[1] BACA DATASET")
-df = pd.read_csv(' https://storage.googleapis.com/dqlab-dataset/retail_raw_test.csv', low_memory=False)
+df = pd.read_csv('https://storage.googleapis.com/dqlab-dataset/retail_raw_test.csv', low_memory=False)
 print("    Dataset:\n", df.head())
 print("    Info:\n", df.info())
 
@@ -23,8 +23,8 @@ def impute_product_value(val):
     else:
         return 'P' + '{:0>4}'.format(str(val).split('.')[0])
 # Buat kolom "product_id"
-df["product_id"] = df["product_value"].apply(lambda x: x.split("'")[1]).astype('str')
+df["product_id"] = df["product_value"].apply(lambda x: impute_product_value(x))
 # Hapus kolom "product_value"
-df.drop(['product_value'], axis=1, inplace='unknown')
+df.drop(['product_value'], axis=1, inplace=True)
 # Cetak 5 data teratas
 print(df.head())
